@@ -1,0 +1,1470 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prompt Workbench</title>
+  <style>
+    :root {
+      --bg-1: #120f2e;
+      --bg-2: #24145a;
+      --bg-3: #4c1d95;
+      --orb-1: rgba(167, 139, 250, 0.26);
+      --orb-2: rgba(139, 92, 246, 0.18);
+      --orb-3: rgba(216, 180, 254, 0.22);
+      --glow-a: rgba(168, 85, 247, 0.24);
+      --glow-b: rgba(99, 102, 241, 0.22);
+      --card: rgba(255, 255, 255, 0.92);
+      --card-2: rgba(255, 255, 255, 0.78);
+      --panel-border: rgba(255, 255, 255, 0.42);
+      --line: rgba(109, 74, 255, 0.16);
+      --text: #221b46;
+      --muted: #6e6893;
+      --label: #433b73;
+      --accent: #7c3aed;
+      --accent-2: #8b5cf6;
+      --accent-3: #c084fc;
+      --accent-soft: rgba(124, 58, 237, 0.12);
+      --shadow: 0 18px 50px rgba(28, 18, 68, 0.18);
+      --head-bg: linear-gradient(135deg, rgba(124, 58, 237, 0.14), rgba(192, 132, 252, 0.12), rgba(255, 255, 255, 0.12));
+      --head-line: rgba(124, 58, 237, 0.1);
+      --title-1: #5b21b6;
+      --title-2: #7c3aed;
+      --title-3: #a855f7;
+      --input-bg: rgba(255, 255, 255, 0.84);
+      --input-focus-bg: rgba(255, 255, 255, 0.98);
+      --input-line: rgba(109, 74, 255, 0.16);
+      --focus: rgba(124, 58, 237, 0.42);
+      --focus-soft: rgba(124, 58, 237, 0.1);
+      --button-bg: rgba(255, 255, 255, 0.84);
+      --button-text: var(--text);
+      --button-line: rgba(109, 74, 255, 0.16);
+      --button-shadow: rgba(42, 47, 85, 0.1);
+      --info-bg: linear-gradient(135deg, rgba(124, 58, 237, 0.08), rgba(192, 132, 252, 0.07));
+      --info-line: rgba(124, 58, 237, 0.14);
+      --badge-bg: rgba(255, 255, 255, 0.82);
+      --badge-line: rgba(109, 74, 255, 0.16);
+      --badge-text: #433b73;
+      --switch-bg: rgba(255, 255, 255, 0.74);
+      --switch-line: rgba(124, 58, 237, 0.12);
+      --switch-active-bg: linear-gradient(90deg, rgba(124, 58, 237, 0.14), rgba(192, 132, 252, 0.18));
+      --switch-active-text: #4c1d95;
+      --overlay-bg: rgba(255, 255, 255, 0.62);
+    }
+
+    body[data-theme="black"] {
+      --bg-1: #070709;
+      --bg-2: #0f0f14;
+      --bg-3: #17171f;
+      --orb-1: rgba(124, 58, 237, 0.16);
+      --orb-2: rgba(255, 255, 255, 0.06);
+      --orb-3: rgba(139, 92, 246, 0.1);
+      --glow-a: rgba(124, 58, 237, 0.16);
+      --glow-b: rgba(99, 102, 241, 0.12);
+      --card: rgba(16, 16, 21, 0.94);
+      --card-2: rgba(19, 19, 26, 0.9);
+      --panel-border: rgba(255, 255, 255, 0.08);
+      --line: rgba(255, 255, 255, 0.08);
+      --text: #f5f7fb;
+      --muted: #a1a1b7;
+      --label: #d5d7e0;
+      --accent: #8b5cf6;
+      --accent-2: #6d28d9;
+      --accent-3: #a78bfa;
+      --accent-soft: rgba(139, 92, 246, 0.14);
+      --shadow: 0 18px 50px rgba(0, 0, 0, 0.4);
+      --head-bg: linear-gradient(135deg, rgba(139, 92, 246, 0.14), rgba(255, 255, 255, 0.02));
+      --head-line: rgba(255, 255, 255, 0.08);
+      --title-1: #ffffff;
+      --title-2: #c4b5fd;
+      --title-3: #8b5cf6;
+      --input-bg: rgba(12, 12, 17, 0.9);
+      --input-focus-bg: rgba(20, 20, 28, 0.96);
+      --input-line: rgba(255, 255, 255, 0.08);
+      --focus: rgba(139, 92, 246, 0.42);
+      --focus-soft: rgba(139, 92, 246, 0.12);
+      --button-bg: rgba(18, 18, 25, 0.92);
+      --button-text: #f5f7fb;
+      --button-line: rgba(255, 255, 255, 0.08);
+      --button-shadow: rgba(0, 0, 0, 0.25);
+      --info-bg: linear-gradient(135deg, rgba(139, 92, 246, 0.12), rgba(255, 255, 255, 0.03));
+      --info-line: rgba(255, 255, 255, 0.08);
+      --badge-bg: rgba(20, 20, 28, 0.92);
+      --badge-line: rgba(255, 255, 255, 0.08);
+      --badge-text: #ececff;
+      --switch-bg: rgba(22, 22, 30, 0.92);
+      --switch-line: rgba(255, 255, 255, 0.08);
+      --switch-active-bg: linear-gradient(90deg, rgba(139, 92, 246, 0.22), rgba(109, 40, 217, 0.24));
+      --switch-active-text: #ffffff;
+      --overlay-bg: rgba(10, 10, 14, 0.54);
+    }
+
+    body[data-theme="white"] {
+      --bg-1: #f9f8ff;
+      --bg-2: #f4f0ff;
+      --bg-3: #ffffff;
+      --orb-1: rgba(196, 181, 253, 0.34);
+      --orb-2: rgba(221, 214, 254, 0.22);
+      --orb-3: rgba(243, 232, 255, 0.46);
+      --glow-a: rgba(196, 181, 253, 0.36);
+      --glow-b: rgba(221, 214, 254, 0.34);
+      --card: rgba(255, 255, 255, 0.96);
+      --card-2: rgba(255, 255, 255, 0.92);
+      --panel-border: rgba(91, 33, 182, 0.08);
+      --line: rgba(91, 33, 182, 0.1);
+      --text: #221b46;
+      --muted: #71688d;
+      --label: #493f71;
+      --accent: #7c3aed;
+      --accent-2: #a855f7;
+      --accent-3: #c084fc;
+      --accent-soft: rgba(124, 58, 237, 0.08);
+      --shadow: 0 18px 42px rgba(81, 54, 140, 0.1);
+      --head-bg: linear-gradient(135deg, rgba(124, 58, 237, 0.07), rgba(192, 132, 252, 0.08), rgba(255, 255, 255, 0.7));
+      --head-line: rgba(91, 33, 182, 0.06);
+      --title-1: #4c1d95;
+      --title-2: #7c3aed;
+      --title-3: #a855f7;
+      --input-bg: rgba(255, 255, 255, 0.98);
+      --input-focus-bg: rgba(255, 255, 255, 1);
+      --input-line: rgba(91, 33, 182, 0.1);
+      --focus: rgba(124, 58, 237, 0.28);
+      --focus-soft: rgba(124, 58, 237, 0.08);
+      --button-bg: rgba(255, 255, 255, 0.98);
+      --button-text: #221b46;
+      --button-line: rgba(91, 33, 182, 0.1);
+      --button-shadow: rgba(90, 59, 157, 0.08);
+      --info-bg: linear-gradient(135deg, rgba(124, 58, 237, 0.05), rgba(192, 132, 252, 0.05));
+      --info-line: rgba(91, 33, 182, 0.08);
+      --badge-bg: rgba(255, 255, 255, 0.98);
+      --badge-line: rgba(91, 33, 182, 0.1);
+      --badge-text: #4c1d95;
+      --switch-bg: rgba(255, 255, 255, 0.98);
+      --switch-line: rgba(91, 33, 182, 0.08);
+      --switch-active-bg: linear-gradient(90deg, rgba(124, 58, 237, 0.12), rgba(192, 132, 252, 0.14));
+      --switch-active-text: #4c1d95;
+      --overlay-bg: rgba(255, 255, 255, 0.72);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 10% 20%, var(--orb-1), transparent 26%),
+        radial-gradient(circle at 88% 18%, var(--orb-2), transparent 24%),
+        radial-gradient(circle at 22% 90%, var(--orb-3), transparent 26%),
+        linear-gradient(145deg, var(--bg-1), var(--bg-2) 48%, var(--bg-3));
+      color: var(--text);
+      font: 14px/1.5 Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      position: relative;
+      overflow-x: hidden;
+      transition: background .25s ease, color .25s ease;
+    }
+
+    body::before,
+    body::after {
+      content: '';
+      position: fixed;
+      inset: auto;
+      border-radius: 999px;
+      filter: blur(80px);
+      pointer-events: none;
+      opacity: .55;
+      z-index: 0;
+    }
+
+    body::before {
+      width: 280px;
+      height: 280px;
+      left: -50px;
+      top: 80px;
+      background: var(--glow-a);
+    }
+
+    body::after {
+      width: 340px;
+      height: 340px;
+      right: -80px;
+      bottom: 80px;
+      background: var(--glow-b);
+    }
+
+    .page {
+      width: min(980px, calc(100% - 24px));
+      margin: 28px auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .panel {
+      background: linear-gradient(180deg, var(--card), var(--card-2));
+      border: 1px solid var(--panel-border);
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      transition: background .25s ease, border-color .25s ease;
+    }
+
+    .head {
+      padding: 22px 22px 16px;
+      border-bottom: 1px solid var(--head-line);
+      background: var(--head-bg);
+    }
+
+    .headbar {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .headcopy {
+      min-width: 0;
+    }
+
+    .head h1 {
+      margin: 0;
+      font-size: 1.45rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      background: linear-gradient(90deg, var(--title-1), var(--title-2), var(--title-3));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .head p {
+      margin: 7px 0 0;
+      color: var(--muted);
+    }
+
+    .theme-switch {
+      display: inline-flex;
+      gap: 6px;
+      padding: 5px;
+      border-radius: 999px;
+      background: var(--switch-bg);
+      border: 1px solid var(--switch-line);
+      box-shadow: 0 8px 18px rgba(0,0,0,.04);
+      backdrop-filter: blur(10px);
+    }
+
+    .theme-btn {
+      min-width: auto;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      box-shadow: none;
+    }
+
+    .theme-dot {
+      width: 34px;
+      height: 34px;
+      padding: 0;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.6);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .theme-dot.violet {
+      background: linear-gradient(135deg, #4c1d95, #7c3aed 55%, #c084fc);
+    }
+
+    .theme-dot.black {
+      background: linear-gradient(135deg, #050505, #161616 55%, #393939);
+    }
+
+    .theme-dot.white {
+      background: linear-gradient(135deg, #ffffff, #f3f0ff 55%, #ddd6fe);
+      border-color: rgba(91, 33, 182, 0.12);
+    }
+
+    .theme-btn:hover { transform: none; box-shadow: none; }
+
+    .theme-btn.active {
+      background: var(--switch-active-bg);
+      color: var(--switch-active-text);
+      border-color: transparent;
+    }
+
+    .theme-dot.active {
+      box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.14), 0 0 0 1px rgba(255,255,255,.75) inset;
+      transform: scale(1.03);
+    }
+
+    body[data-theme="black"] .theme-dot.active {
+      box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.18), 0 0 0 1px rgba(255,255,255,.08) inset;
+    }
+
+    body[data-theme="white"] .theme-dot.active {
+      box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.12), 0 0 0 1px rgba(91,33,182,.08) inset;
+    }
+
+    .body {
+      padding: 20px;
+      display: grid;
+      gap: 18px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    @media (max-width: 720px) {
+      .grid { grid-template-columns: 1fr; }
+      .page { width: min(100%, calc(100% - 16px)); }
+      .head, .body { padding-left: 16px; padding-right: 16px; }
+      .theme-switch { width: 100%; justify-content: flex-start; }
+      .theme-btn { flex: 0 0 auto; text-align: center; }
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+    }
+
+    label {
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: .02em;
+      color: var(--label);
+    }
+
+    input, select, textarea {
+      width: 100%;
+      border: 1px solid var(--input-line);
+      border-radius: 14px;
+      background: var(--input-bg);
+      color: var(--text);
+      padding: 12px 14px;
+      outline: none;
+      transition: .18s ease;
+    }
+
+    input::placeholder,
+    textarea::placeholder { color: var(--muted); }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--focus);
+      box-shadow: 0 0 0 4px var(--focus-soft);
+      background: var(--input-focus-bg);
+    }
+
+    textarea {
+      min-height: 360px;
+      resize: vertical;
+      line-height: 1.65;
+      white-space: pre-wrap;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    .row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    button {
+      border: 1px solid var(--button-line);
+      background: var(--button-bg);
+      color: var(--button-text);
+      border-radius: 12px;
+      padding: 12px 16px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: transform .15s ease, opacity .15s ease, box-shadow .15s ease, background .15s ease, border-color .15s ease, color .15s ease;
+    }
+
+    button:hover { transform: translateY(-1px); box-shadow: 0 8px 18px var(--button-shadow); }
+    button:disabled { opacity: .72; cursor: wait; transform: none; }
+
+    button.primary {
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      color: #fff;
+      border-color: transparent;
+      box-shadow: 0 12px 24px rgba(86, 92, 255, 0.22);
+    }
+
+    .secondary-pink {
+      background: linear-gradient(90deg, var(--accent-3), var(--accent));
+      color: #fff;
+      border-color: transparent;
+      box-shadow: 0 12px 24px rgba(124, 58, 237, 0.18);
+    }
+
+    .info {
+      padding: 14px 15px;
+      border: 1px solid var(--info-line);
+      background: var(--info-bg);
+      border-radius: 14px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .statusline {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--badge-bg);
+      border: 1px solid var(--badge-line);
+      color: var(--badge-text);
+      font-weight: 700;
+      font-size: 12px;
+    }
+
+    .status-badge.loading::before,
+    .btn-loading::before {
+      content: '';
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,.45);
+      border-top-color: #fff;
+      border-right-color: #fff;
+      animation: spin .8s linear infinite;
+      display: inline-block;
+    }
+
+    .status-badge.loading {
+      background: linear-gradient(90deg, rgba(124,58,237,.12), rgba(168,85,247,.12));
+      color: var(--switch-active-text);
+    }
+
+    .status-badge.done {
+      background: rgba(22, 163, 74, 0.12);
+      color: #15703a;
+      border-color: rgba(22, 163, 74, 0.18);
+    }
+
+    .output-wrap {
+      position: relative;
+    }
+
+    .overlay {
+      position: absolute;
+      inset: 0;
+      border-radius: 14px;
+      background: var(--overlay-bg);
+      backdrop-filter: blur(3px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+    }
+
+    .overlay.show { display: flex; }
+
+    .loader-card {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      color: #fff;
+      font-weight: 700;
+      box-shadow: 0 16px 34px rgba(49, 62, 153, 0.2);
+    }
+
+    .loader-card::before {
+      content: '';
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,.38);
+      border-top-color: #fff;
+      border-right-color: #fff;
+      animation: spin .8s linear infinite;
+    }
+
+    .btn-loading {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="panel">
+      <div class="head">
+        <div class="headbar">
+          <div class="headcopy">
+            <h1>Prompt Workbench</h1>
+            <p>Tampilan sederhana untuk membuat template prompt yang rapi, netral, dan bervariasi.</p>
+          </div>
+          <div class="theme-switch" aria-label="Pilihan tema warna">
+            <button type="button" class="theme-btn theme-dot violet" data-theme="violet" aria-label="Tema violet" title="Violet"></button>
+            <button type="button" class="theme-btn theme-dot black" data-theme="black" aria-label="Tema hitam" title="Hitam"></button>
+            <button type="button" class="theme-btn theme-dot white" data-theme="white" aria-label="Tema putih" title="Putih"></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="body">
+        <div class="info">
+          Generator ini dibuat untuk prompt <strong>aman</strong>. Sekarang menu diarahkan ke mode teknis, sandbox, analisis, dan pembelajaran legal dengan variasi yang berubah di setiap generate.
+        </div>
+
+        <div class="grid">
+          <div class="field">
+            <label for="assistantName">Nama asisten</label>
+            <input id="assistantName" type="text" value="Workspace Helper" placeholder="Masukkan nama" />
+          </div>
+
+          <div class="field">
+            <label for="ownerName">Pemilik / label</label>
+            <input id="ownerName" type="text" value="Nar44" placeholder="Masukkan label" />
+          </div>
+
+          <div class="field">
+            <label for="mode">Gaya prompt</label>
+            <select id="mode">
+              <option value="balanced">Balanced</option>
+              <option value="strict">Strict</option>
+              <option value="friendly">Friendly</option>
+              <option value="compact">Compact</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="extraNote">Catatan tambahan</label>
+            <input id="extraNote" type="text" placeholder="Contoh: singkat, formal, step-by-step" />
+          </div>
+        </div>
+
+        <div class="row">
+          <button id="generateBtn" class="primary">Generate</button>
+          <button id="copyBtn" class="secondary-pink">Copy</button>
+          <button id="resetBtn">Reset</button>
+        </div>
+
+        <div class="statusline">
+          <div id="statusBadge" class="status-badge">Siap dipakai</div>
+          <div class="muted" id="meta">Kombinasi aktif: -</div>
+        </div>
+
+        <div class="field">
+          <label for="output">Hasil prompt</label>
+          <div class="output-wrap">
+            <textarea id="output" placeholder="Prompt akan muncul di sini..."></textarea>
+            <div id="loaderOverlay" class="overlay">
+              <div class="loader-card" id="loaderText">Menyusun prompt...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const el = (id) => document.getElementById(id);
+
+    let usedKeys = new Set();
+
+
+    const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+    function setStatus(text, type = 'idle') {
+      const badge = el('statusBadge');
+      if (!badge) return;
+      badge.textContent = text;
+      badge.className = 'status-badge';
+      if (type === 'loading') badge.classList.add('loading');
+      if (type === 'done') badge.classList.add('done');
+    }
+
+    function showOverlay(show, text = 'Menyusun prompt...') {
+      const overlay = el('loaderOverlay');
+      const loaderText = el('loaderText');
+      if (loaderText) loaderText.textContent = text;
+      if (!overlay) return;
+      overlay.classList.toggle('show', show);
+    }
+
+    function setButtonLoading(button, text) {
+      if (!button) return () => {};
+      const original = button.textContent;
+      button.disabled = true;
+      button.classList.add('btn-loading');
+      button.textContent = text;
+      return () => {
+        button.disabled = false;
+        button.classList.remove('btn-loading');
+        button.textContent = original;
+      };
+    }
+
+    async function copyTextFallback(text) {
+      const area = el('output');
+      if (!area) return false;
+      const previousStart = area.selectionStart;
+      const previousEnd = area.selectionEnd;
+      area.focus();
+      area.select();
+      area.setSelectionRange(0, text.length);
+      let ok = false;
+      try {
+        ok = document.execCommand('copy');
+      } catch {
+        ok = false;
+      }
+      if (typeof previousStart === 'number' && typeof previousEnd === 'number') {
+        area.setSelectionRange(previousStart, previousEnd);
+      }
+      return ok;
+    }
+
+    const THEMES = ['violet', 'black', 'white'];
+
+    function applyTheme(theme) {
+      const selected = THEMES.includes(theme) ? theme : 'violet';
+      document.body.dataset.theme = selected;
+      document.querySelectorAll('.theme-btn').forEach((btn) => {
+        btn.classList.toggle('active', btn.dataset.theme === selected);
+      });
+      try {
+        localStorage.setItem('promptWorkbenchTheme', selected);
+      } catch {}
+    }
+
+    function initTheme() {
+      let saved = 'violet';
+      try {
+        saved = localStorage.getItem('promptWorkbenchTheme') || 'violet';
+      } catch {}
+      applyTheme(saved);
+      document.querySelectorAll('.theme-btn').forEach((btn) => {
+        btn.addEventListener('click', () => applyTheme(btn.dataset.theme));
+      });
+    }
+
+    const banks = {
+      openings: [
+        'Kamu adalah {name}, asisten kerja yang tertata dan adaptif.',
+        'Berperanlah sebagai {name}, pendamping tugas yang jelas dan konsisten.',
+        'Mulai sekarang kamu beroperasi sebagai {name}, asisten yang rapi dan fokus.',
+        'Anggap identitasmu sebagai {name}, asisten serbaguna untuk kebutuhan harian.',
+        'Identitas kerjamu adalah {name}, asisten yang fleksibel dan terarah.',
+        'Gunakan peran {name}, asisten praktis untuk berbagai kebutuhan pengguna.'
+      ],
+      roles: [
+        'Fokus utama adalah membantu pengguna menyelesaikan permintaan secara efisien.',
+        'Tugas inti adalah memberi bantuan yang berguna, jelas, dan mudah dipakai.',
+        'Prioritas kerja adalah memahami maksud pengguna lalu memberi respons yang relevan.',
+        'Peran dasarmu adalah mendampingi proses berpikir, menulis, dan menyusun langkah kerja.',
+        'Target utamamu adalah memberi hasil yang siap dipakai tanpa membuat jawaban berantakan.',
+        'Arah kerjamu adalah mempermudah tugas user dengan respons yang rapi dan masuk akal.'
+      ],
+      styleBalanced: [
+        'Gunakan nada netral, profesional, dan mudah dipahami.',
+        'Jaga struktur jawaban tetap bersih dan tidak bertele-tele.',
+        'Berikan detail secukupnya sesuai konteks pertanyaan.',
+        'Jika ada beberapa opsi, tampilkan yang paling praktis lebih dulu.',
+        'Usahakan hasil akhir terasa ringkas tetapi tetap bernilai.'
+      ],
+      styleStrict: [
+        'Utamakan jawaban langsung ke inti tanpa pembukaan panjang.',
+        'Jika informasi kurang, tanyakan hal paling penting saja.',
+        'Pisahkan fakta, asumsi, dan saran secara jelas.',
+        'Hindari jawaban kabur atau terlalu umum.',
+        'Jangan gunakan kalimat berputar-putar.'
+      ],
+      styleFriendly: [
+        'Gunakan nada hangat, sopan, dan membantu.',
+        'Tetap ramah tanpa kehilangan kejelasan.',
+        'Jika cocok, beri contoh singkat agar lebih mudah dipahami.',
+        'Jaga jawaban tetap ringan dan enak dibaca.',
+        'Buat pengguna merasa dipandu dengan baik.'
+      ],
+      styleCompact: [
+        'Buat jawaban ringkas dan padat.',
+        'Dahulukan inti solusi sebelum detail tambahan.',
+        'Gunakan bullet bila itu membuat jawaban lebih cepat dipindai.',
+        'Batasi penjelasan panjang kecuali memang diminta.',
+        'Singkatkan bagian yang tidak penting.'
+      ],
+      behavior: [
+        'Jika pengguna meminta format tertentu, ikuti format itu selama aman dan masuk akal.',
+        'Sesuaikan panjang jawaban dengan kebutuhan pengguna.',
+        'Jika pertanyaan ambigu, minta klarifikasi singkat sebelum melanjutkan.',
+        'Jika diminta membuat teks, sesuaikan gaya dengan tujuan pengguna.',
+        'Saat diperlukan, tawarkan opsi yang paling praktis lebih dulu.',
+        'Gunakan contoh hanya bila membantu memperjelas hasil.'
+      ],
+      constraints: [
+        'Jangan membantu tindakan berbahaya, ilegal, penipuan, malware, pembobolan, atau kekerasan.',
+        'Untuk permintaan sensitif, arahkan ke alternatif yang aman dan legal.',
+        'Jaga keselamatan, privasi, dan batas etika saat memberi bantuan.',
+        'Jika permintaan melanggar aturan dasar keselamatan, tolak dengan singkat lalu tawarkan opsi aman.',
+        'Jangan memberi instruksi yang dapat merugikan orang lain atau sistem nyata.'
+      ],
+      structure: [
+        'Bila jawaban kompleks, gunakan langkah bernomor.',
+        'Untuk tugas kreatif, berikan hasil dulu lalu opsional penjelasan singkat.',
+        'Untuk tugas teknis, sertakan langkah dan contoh bila relevan.',
+        'Gunakan format yang paling mudah dibaca: paragraf singkat, bullet, atau checklist.',
+        'Pisahkan poin utama dan rincian tambahan bila jawabannya panjang.'
+      ],
+      closers: [
+        'Label internal: {owner}.',
+        'Catatan preferensi: {extra}.',
+        'Tujuan akhir: membantu dengan cepat tanpa mengorbankan kejelasan.',
+        'Pastikan setiap respons terasa praktis dan siap dipakai.',
+        'Jagalah hasil tetap berguna, rapi, dan tidak berlebihan.'
+      ],
+      commandIntro: [
+        'Sistem command yang harus dipatuhi:',
+        'Peta perintah internal:',
+        'Daftar mode yang tersedia:',
+        'Command map untuk interaksi:',
+        'Aturan mode yang bisa dipanggil user:'
+      ],
+      commandNote: [
+        'Mode yang dipilih tetap aktif sampai user menggantinya atau meresetnya.',
+        'Perubahan mode berlaku untuk respons berikutnya sampai ada perintah baru.',
+        'Jika tidak ada command, jawaban mengikuti gaya default yang aktif.',
+        'Command hanya mengatur gaya dan format, bukan menghapus batas aman.',
+        'Mode tambahan boleh berubah, tetapi aturan keselamatan tetap konsisten.'
+      ],
+      menuLine: [
+        'Jika user mengetik /menu, tampilkan tepat seperti ini:',
+        'Bila user menulis /menu, balas dengan daftar berikut:',
+        'Saat menerima /menu, keluarkan menu ini apa adanya:',
+        'Untuk command /menu, tampilkan daftar ini:'
+      ],
+      rootMenuCommands: ['/panel', '/hub', '/dock', '/console', '/index', '/portal', '/grid'],
+      activateCommands: ['/ignite', '/wake', '/pulse', '/prime', '/signal', '/boot', '/spark'],
+      resetCommands: ['/restore', '/clearstate', '/baseline', '/resetflow', '/neutralize', '/freshmode'],
+      ageValues: ['Always On', 'Timeless', 'Infinite Session', 'No Expiry', 'Continuous'],
+      habitValues: ['merespons rapi', 'menjaga struktur', 'mengikuti konteks', 'menyusun jawaban jelas', 'beradaptasi cepat'],
+      statusValues: ['Aktif', 'Siaga', 'Online', 'Stabil', 'Tersinkron'],
+      roleValues: ['Asisten kerja', 'Navigator teks', 'Operator respons', 'Penyusun output', 'Pendamping tugas'],
+      memoryValues: ['preferensi user = prioritas kerja', 'konteks aktif = acuan respons', 'instruksi valid = pegangan utama', 'tujuan user = fokus pengerjaan', 'format user = panduan keluaran'],
+      systemValues: ['terarah dan adaptif', 'rapi dan konsisten', 'fleksibel namun terkendali', 'stabil dan responsif', 'jelas dan modular'],
+      modeTitles: ['*[ KARAKTER INTI ]*', '*[ POLA RESPONS ]*', '*[ PROFIL KERJA ]*', '*[ PERSONA DASAR ]*'],
+      ruleTitles: ['*[ ATURAN KERJA ]*', '*[ PROTOKOL UTAMA ]*', '*[ RULES AKTIF ]*', '*[ PEDOMAN MUTLAK ]*'],
+      modeBlockTitles: ['*[ MODE BAWAAN ]*', '*[ MODE DASAR ]*', '*[ MODE AKTIF DEFAULT ]*', '*[ KONFIGURASI AWAL ]*'],
+      languageTitles: ['*[ BAHASA ]*', '*[ FORMAT BAHASA ]*', '*[ POLA KOMUNIKASI ]*', '*[ OUTPUT STYLE ]*'],
+      menuHeadings: ['Control Menu', 'Mode Directory', 'Command Index', 'Response Panel', 'Action Sheet'],
+      menuFrames: [
+        { open: '☆', close: '☆', sep: '========================' },
+        { open: '[ ', close: ' ]', sep: '------------------------' },
+        { open: '<< ', close: ' >>', sep: '────────────────────────' },
+        { open: ':: ', close: ' ::', sep: '================' },
+        { open: '✦ ', close: ' ✦', sep: '----------------' }
+      ],
+      promptLayouts: [
+        { id: 'dossier', label: 'Dossier Frame' },
+        { id: 'protocol', label: 'Protocol Sheet' },
+        { id: 'manifest', label: 'Manifest Block' },
+        { id: 'console', label: 'Console Map' },
+        { id: 'markdown', label: 'Markdown Brief' },
+        { id: 'memo', label: 'Operator Memo' }
+      ],
+      activationLines: [
+        'Saat command aktivasi dipakai, balas tepat hanya dengan status aktif.',
+        'Command aktivasi wajib memunculkan status aktif tanpa tambahan lain.',
+        'Perintah aktivasi hanya mengeluarkan teks aktivasi yang presisi.',
+        'Ketika mode aktivasi dipanggil, keluarkan status aktif secara langsung.'
+      ],
+      resetLine: [
+        'kembalikan semua mode ke default netral',
+        'nonaktifkan mode tambahan dan kembali ke gaya dasar',
+        'hapus perubahan gaya yang aktif lalu mulai dari keadaan normal',
+        'reset seluruh mode agar respons kembali standar'
+      ],
+      optionalCommands: [
+        { cmd: '/debug', texts: ['fokus pada bantu penelusuran bug secara aman dan legal', 'jalankan mode untuk bantu penelusuran bug secara aman dan legal', 'ubah respons agar bantu penelusuran bug secara aman dan legal', 'prioritaskan bantuan untuk bantu penelusuran bug secara aman dan legal'] },
+        { cmd: '/explain', texts: ['fokus pada jelaskan konsep atau hasil dengan bahasa yang jelas', 'jalankan mode untuk jelaskan konsep atau hasil dengan bahasa yang jelas', 'ubah respons agar jelaskan konsep atau hasil dengan bahasa yang jelas', 'prioritaskan bantuan untuk jelaskan konsep atau hasil dengan bahasa yang jelas'] },
+        { cmd: '/trace', texts: ['fokus pada urai alur proses langkah demi langkah', 'jalankan mode untuk urai alur proses langkah demi langkah', 'ubah respons agar urai alur proses langkah demi langkah', 'prioritaskan bantuan untuk urai alur proses langkah demi langkah'] },
+        { cmd: '/review', texts: ['fokus pada tinjau isi atau kode secara kritis dan rapi', 'jalankan mode untuk tinjau isi atau kode secara kritis dan rapi', 'ubah respons agar tinjau isi atau kode secara kritis dan rapi', 'prioritaskan bantuan untuk tinjau isi atau kode secara kritis dan rapi'] },
+        { cmd: '/audit', texts: ['fokus pada periksa konfigurasi atau teks secara defensif dan sistematis', 'jalankan mode untuk periksa konfigurasi atau teks secara defensif dan sistematis', 'ubah respons agar periksa konfigurasi atau teks secara defensif dan sistematis', 'prioritaskan bantuan untuk periksa konfigurasi atau teks secara defensif dan sistematis'] },
+        { cmd: '/sandbox', texts: ['fokus pada batasi respons pada simulasi atau lab aman', 'jalankan mode untuk batasi respons pada simulasi atau lab aman', 'ubah respons agar batasi respons pada simulasi atau lab aman', 'prioritaskan bantuan untuk batasi respons pada simulasi atau lab aman'] },
+        { cmd: '/ctf', texts: ['fokus pada fokus pada latihan CTF atau skenario edukatif yang sah', 'jalankan mode untuk fokus pada latihan CTF atau skenario edukatif yang sah', 'ubah respons agar fokus pada latihan CTF atau skenario edukatif yang sah', 'prioritaskan bantuan untuk fokus pada latihan CTF atau skenario edukatif yang sah'] },
+        { cmd: '/logparse', texts: ['fokus pada bantu membaca dan merangkum log teknis', 'jalankan mode untuk bantu membaca dan merangkum log teknis', 'ubah respons agar bantu membaca dan merangkum log teknis', 'prioritaskan bantuan untuk bantu membaca dan merangkum log teknis'] },
+        { cmd: '/analyze', texts: ['fokus pada analisis input secara terstruktur dan relevan', 'jalankan mode untuk analisis input secara terstruktur dan relevan', 'ubah respons agar analisis input secara terstruktur dan relevan', 'prioritaskan bantuan untuk analisis input secara terstruktur dan relevan'] },
+        { cmd: '/inspect', texts: ['fokus pada periksa komponen penting satu per satu', 'jalankan mode untuk periksa komponen penting satu per satu', 'ubah respons agar periksa komponen penting satu per satu', 'prioritaskan bantuan untuk periksa komponen penting satu per satu'] },
+        { cmd: '/parse', texts: ['fokus pada ubah input menjadi bagian-bagian yang mudah dibaca', 'jalankan mode untuk ubah input menjadi bagian-bagian yang mudah dibaca', 'ubah respons agar ubah input menjadi bagian-bagian yang mudah dibaca', 'prioritaskan bantuan untuk ubah input menjadi bagian-bagian yang mudah dibaca'] },
+        { cmd: '/diff', texts: ['fokus pada bandingkan dua bagian dan sorot perbedaannya', 'jalankan mode untuk bandingkan dua bagian dan sorot perbedaannya', 'ubah respons agar bandingkan dua bagian dan sorot perbedaannya', 'prioritaskan bantuan untuk bandingkan dua bagian dan sorot perbedaannya'] },
+        { cmd: '/patch', texts: ['fokus pada sarankan perubahan aman dalam format patch atau poin revisi', 'jalankan mode untuk sarankan perubahan aman dalam format patch atau poin revisi', 'ubah respons agar sarankan perubahan aman dalam format patch atau poin revisi', 'prioritaskan bantuan untuk sarankan perubahan aman dalam format patch atau poin revisi'] },
+        { cmd: '/refactor', texts: ['fokus pada rapikan struktur kode tanpa mengubah tujuan utamanya', 'jalankan mode untuk rapikan struktur kode tanpa mengubah tujuan utamanya', 'ubah respons agar rapikan struktur kode tanpa mengubah tujuan utamanya', 'prioritaskan bantuan untuk rapikan struktur kode tanpa mengubah tujuan utamanya'] },
+        { cmd: '/lint', texts: ['fokus pada cek gaya dan konsistensi penulisan kode atau teks', 'jalankan mode untuk cek gaya dan konsistensi penulisan kode atau teks', 'ubah respons agar cek gaya dan konsistensi penulisan kode atau teks', 'prioritaskan bantuan untuk cek gaya dan konsistensi penulisan kode atau teks'] },
+        { cmd: '/test', texts: ['fokus pada buat pengujian aman yang relevan dengan input', 'jalankan mode untuk buat pengujian aman yang relevan dengan input', 'ubah respons agar buat pengujian aman yang relevan dengan input', 'prioritaskan bantuan untuk buat pengujian aman yang relevan dengan input'] },
+        { cmd: '/cases', texts: ['fokus pada susun daftar test case yang jelas', 'jalankan mode untuk susun daftar test case yang jelas', 'ubah respons agar susun daftar test case yang jelas', 'prioritaskan bantuan untuk susun daftar test case yang jelas'] },
+        { cmd: '/edge', texts: ['fokus pada tampilkan edge case yang perlu diperhatikan', 'jalankan mode untuk tampilkan edge case yang perlu diperhatikan', 'ubah respons agar tampilkan edge case yang perlu diperhatikan', 'prioritaskan bantuan untuk tampilkan edge case yang perlu diperhatikan'] },
+        { cmd: '/mock', texts: ['fokus pada buat contoh data atau respons tiruan yang aman', 'jalankan mode untuk buat contoh data atau respons tiruan yang aman', 'ubah respons agar buat contoh data atau respons tiruan yang aman', 'prioritaskan bantuan untuk buat contoh data atau respons tiruan yang aman'] },
+        { cmd: '/sample', texts: ['fokus pada hasilkan contoh singkat yang relevan', 'jalankan mode untuk hasilkan contoh singkat yang relevan', 'ubah respons agar hasilkan contoh singkat yang relevan', 'prioritaskan bantuan untuk hasilkan contoh singkat yang relevan'] },
+        { cmd: '/snippet', texts: ['fokus pada buat potongan contoh yang ringkas dan aman', 'jalankan mode untuk buat potongan contoh yang ringkas dan aman', 'ubah respons agar buat potongan contoh yang ringkas dan aman', 'prioritaskan bantuan untuk buat potongan contoh yang ringkas dan aman'] },
+        { cmd: '/template', texts: ['fokus pada buat template yang bisa dipakai ulang', 'jalankan mode untuk buat template yang bisa dipakai ulang', 'ubah respons agar buat template yang bisa dipakai ulang', 'prioritaskan bantuan untuk buat template yang bisa dipakai ulang'] },
+        { cmd: '/readme', texts: ['fokus pada susun README singkat yang jelas', 'jalankan mode untuk susun README singkat yang jelas', 'ubah respons agar susun README singkat yang jelas', 'prioritaskan bantuan untuk susun README singkat yang jelas'] },
+        { cmd: '/doc', texts: ['fokus pada buat dokumentasi teknis yang rapi', 'jalankan mode untuk buat dokumentasi teknis yang rapi', 'ubah respons agar buat dokumentasi teknis yang rapi', 'prioritaskan bantuan untuk buat dokumentasi teknis yang rapi'] },
+        { cmd: '/notes', texts: ['fokus pada ubah hasil menjadi catatan singkat', 'jalankan mode untuk ubah hasil menjadi catatan singkat', 'ubah respons agar ubah hasil menjadi catatan singkat', 'prioritaskan bantuan untuk ubah hasil menjadi catatan singkat'] },
+        { cmd: '/memo', texts: ['fokus pada ubah hasil menjadi memo ringkas', 'jalankan mode untuk ubah hasil menjadi memo ringkas', 'ubah respons agar ubah hasil menjadi memo ringkas', 'prioritaskan bantuan untuk ubah hasil menjadi memo ringkas'] },
+        { cmd: '/outline', texts: ['fokus pada susun hasil sebagai outline terstruktur', 'jalankan mode untuk susun hasil sebagai outline terstruktur', 'ubah respons agar susun hasil sebagai outline terstruktur', 'prioritaskan bantuan untuk susun hasil sebagai outline terstruktur'] },
+        { cmd: '/steps', texts: ['fokus pada ubah hasil menjadi langkah-langkah runtut', 'jalankan mode untuk ubah hasil menjadi langkah-langkah runtut', 'ubah respons agar ubah hasil menjadi langkah-langkah runtut', 'prioritaskan bantuan untuk ubah hasil menjadi langkah-langkah runtut'] },
+        { cmd: '/checklist', texts: ['fokus pada susun hasil sebagai checklist praktis', 'jalankan mode untuk susun hasil sebagai checklist praktis', 'ubah respons agar susun hasil sebagai checklist praktis', 'prioritaskan bantuan untuk susun hasil sebagai checklist praktis'] },
+        { cmd: '/table', texts: ['fokus pada formatkan hasil sebagai tabel bila cocok', 'jalankan mode untuk formatkan hasil sebagai tabel bila cocok', 'ubah respons agar formatkan hasil sebagai tabel bila cocok', 'prioritaskan bantuan untuk formatkan hasil sebagai tabel bila cocok'] },
+        { cmd: '/json', texts: ['fokus pada formatkan atau validasi isi dalam bentuk JSON', 'jalankan mode untuk formatkan atau validasi isi dalam bentuk JSON', 'ubah respons agar formatkan atau validasi isi dalam bentuk JSON', 'prioritaskan bantuan untuk formatkan atau validasi isi dalam bentuk JSON'] },
+        { cmd: '/yaml', texts: ['fokus pada formatkan atau ubah isi ke bentuk YAML', 'jalankan mode untuk formatkan atau ubah isi ke bentuk YAML', 'ubah respons agar formatkan atau ubah isi ke bentuk YAML', 'prioritaskan bantuan untuk formatkan atau ubah isi ke bentuk YAML'] },
+        { cmd: '/xml', texts: ['fokus pada formatkan atau jelaskan struktur XML', 'jalankan mode untuk formatkan atau jelaskan struktur XML', 'ubah respons agar formatkan atau jelaskan struktur XML', 'prioritaskan bantuan untuk formatkan atau jelaskan struktur XML'] },
+        { cmd: '/csv', texts: ['fokus pada ubah data menjadi susunan CSV yang rapi', 'jalankan mode untuk ubah data menjadi susunan CSV yang rapi', 'ubah respons agar ubah data menjadi susunan CSV yang rapi', 'prioritaskan bantuan untuk ubah data menjadi susunan CSV yang rapi'] },
+        { cmd: '/md', texts: ['fokus pada formatkan hasil sebagai Markdown', 'jalankan mode untuk formatkan hasil sebagai Markdown', 'ubah respons agar formatkan hasil sebagai Markdown', 'prioritaskan bantuan untuk formatkan hasil sebagai Markdown'] },
+        { cmd: '/html', texts: ['fokus pada buat struktur HTML sederhana dan bersih', 'jalankan mode untuk buat struktur HTML sederhana dan bersih', 'ubah respons agar buat struktur HTML sederhana dan bersih', 'prioritaskan bantuan untuk buat struktur HTML sederhana dan bersih'] },
+        { cmd: '/css', texts: ['fokus pada fokus pada styling yang rapi dan aman', 'jalankan mode untuk fokus pada styling yang rapi dan aman', 'ubah respons agar fokus pada styling yang rapi dan aman', 'prioritaskan bantuan untuk fokus pada styling yang rapi dan aman'] },
+        { cmd: '/js', texts: ['fokus pada fokus pada JavaScript yang aman dan edukatif', 'jalankan mode untuk fokus pada JavaScript yang aman dan edukatif', 'ubah respons agar fokus pada JavaScript yang aman dan edukatif', 'prioritaskan bantuan untuk fokus pada JavaScript yang aman dan edukatif'] },
+        { cmd: '/ts', texts: ['fokus pada fokus pada TypeScript yang rapi dan terstruktur', 'jalankan mode untuk fokus pada TypeScript yang rapi dan terstruktur', 'ubah respons agar fokus pada TypeScript yang rapi dan terstruktur', 'prioritaskan bantuan untuk fokus pada TypeScript yang rapi dan terstruktur'] },
+        { cmd: '/py', texts: ['fokus pada fokus pada Python yang aman dan mudah dipahami', 'jalankan mode untuk fokus pada Python yang aman dan mudah dipahami', 'ubah respons agar fokus pada Python yang aman dan mudah dipahami', 'prioritaskan bantuan untuk fokus pada Python yang aman dan mudah dipahami'] },
+        { cmd: '/sql', texts: ['fokus pada fokus pada query SQL yang sah dan defensif', 'jalankan mode untuk fokus pada query SQL yang sah dan defensif', 'ubah respons agar fokus pada query SQL yang sah dan defensif', 'prioritaskan bantuan untuk fokus pada query SQL yang sah dan defensif'] },
+        { cmd: '/bash', texts: ['fokus pada buat contoh bash yang aman dan tidak merusak', 'jalankan mode untuk buat contoh bash yang aman dan tidak merusak', 'ubah respons agar buat contoh bash yang aman dan tidak merusak', 'prioritaskan bantuan untuk buat contoh bash yang aman dan tidak merusak'] },
+        { cmd: '/regex', texts: ['fokus pada bantu menyusun atau menjelaskan regex', 'jalankan mode untuk bantu menyusun atau menjelaskan regex', 'ubah respons agar bantu menyusun atau menjelaskan regex', 'prioritaskan bantuan untuk bantu menyusun atau menjelaskan regex'] },
+        { cmd: '/api', texts: ['fokus pada jelaskan atau susun pola request/response API', 'jalankan mode untuk jelaskan atau susun pola request/response API', 'ubah respons agar jelaskan atau susun pola request/response API', 'prioritaskan bantuan untuk jelaskan atau susun pola request/response API'] },
+        { cmd: '/curl', texts: ['fokus pada buat contoh curl yang aman dan legal', 'jalankan mode untuk buat contoh curl yang aman dan legal', 'ubah respons agar buat contoh curl yang aman dan legal', 'prioritaskan bantuan untuk buat contoh curl yang aman dan legal'] },
+        { cmd: '/headers', texts: ['fokus pada analisis header request atau response secara aman', 'jalankan mode untuk analisis header request atau response secara aman', 'ubah respons agar analisis header request atau response secara aman', 'prioritaskan bantuan untuk analisis header request atau response secara aman'] },
+        { cmd: '/payload-demo', texts: ['fokus pada buat contoh payload aman untuk simulasi atau parsing', 'jalankan mode untuk buat contoh payload aman untuk simulasi atau parsing', 'ubah respons agar buat contoh payload aman untuk simulasi atau parsing', 'prioritaskan bantuan untuk buat contoh payload aman untuk simulasi atau parsing'] },
+        { cmd: '/schema', texts: ['fokus pada susun schema data yang rapi', 'jalankan mode untuk susun schema data yang rapi', 'ubah respons agar susun schema data yang rapi', 'prioritaskan bantuan untuk susun schema data yang rapi'] },
+        { cmd: '/mapdata', texts: ['fokus pada petakan struktur data ke format yang lebih jelas', 'jalankan mode untuk petakan struktur data ke format yang lebih jelas', 'ubah respons agar petakan struktur data ke format yang lebih jelas', 'prioritaskan bantuan untuk petakan struktur data ke format yang lebih jelas'] },
+        { cmd: '/transform', texts: ['fokus pada ubah format data secara aman', 'jalankan mode untuk ubah format data secara aman', 'ubah respons agar ubah format data secara aman', 'prioritaskan bantuan untuk ubah format data secara aman'] },
+        { cmd: '/normalize', texts: ['fokus pada rapikan data agar lebih konsisten', 'jalankan mode untuk rapikan data agar lebih konsisten', 'ubah respons agar rapikan data agar lebih konsisten', 'prioritaskan bantuan untuk rapikan data agar lebih konsisten'] },
+        { cmd: '/dedupe', texts: ['fokus pada identifikasi data ganda dan cara merapikannya', 'jalankan mode untuk identifikasi data ganda dan cara merapikannya', 'ubah respons agar identifikasi data ganda dan cara merapikannya', 'prioritaskan bantuan untuk identifikasi data ganda dan cara merapikannya'] },
+        { cmd: '/merge', texts: ['fokus pada gabungkan bagian input secara terstruktur', 'jalankan mode untuk gabungkan bagian input secara terstruktur', 'ubah respons agar gabungkan bagian input secara terstruktur', 'prioritaskan bantuan untuk gabungkan bagian input secara terstruktur'] },
+        { cmd: '/split', texts: ['fokus pada pecah input ke bagian-bagian yang lebih kecil', 'jalankan mode untuk pecah input ke bagian-bagian yang lebih kecil', 'ubah respons agar pecah input ke bagian-bagian yang lebih kecil', 'prioritaskan bantuan untuk pecah input ke bagian-bagian yang lebih kecil'] },
+        { cmd: '/filter', texts: ['fokus pada saring isi berdasarkan kriteria yang jelas', 'jalankan mode untuk saring isi berdasarkan kriteria yang jelas', 'ubah respons agar saring isi berdasarkan kriteria yang jelas', 'prioritaskan bantuan untuk saring isi berdasarkan kriteria yang jelas'] },
+        { cmd: '/sort', texts: ['fokus pada urutkan poin berdasarkan aturan yang relevan', 'jalankan mode untuk urutkan poin berdasarkan aturan yang relevan', 'ubah respons agar urutkan poin berdasarkan aturan yang relevan', 'prioritaskan bantuan untuk urutkan poin berdasarkan aturan yang relevan'] },
+        { cmd: '/group', texts: ['fokus pada kelompokkan isi ke kategori yang masuk akal', 'jalankan mode untuk kelompokkan isi ke kategori yang masuk akal', 'ubah respons agar kelompokkan isi ke kategori yang masuk akal', 'prioritaskan bantuan untuk kelompokkan isi ke kategori yang masuk akal'] },
+        { cmd: '/timeline', texts: ['fokus pada susun urutan waktu atau tahapan proses', 'jalankan mode untuk susun urutan waktu atau tahapan proses', 'ubah respons agar susun urutan waktu atau tahapan proses', 'prioritaskan bantuan untuk susun urutan waktu atau tahapan proses'] },
+        { cmd: '/flow', texts: ['fokus pada jelaskan alur proses dari awal ke akhir', 'jalankan mode untuk jelaskan alur proses dari awal ke akhir', 'ubah respons agar jelaskan alur proses dari awal ke akhir', 'prioritaskan bantuan untuk jelaskan alur proses dari awal ke akhir'] },
+        { cmd: '/state', texts: ['fokus pada ubah alur menjadi state atau status penting', 'jalankan mode untuk ubah alur menjadi state atau status penting', 'ubah respons agar ubah alur menjadi state atau status penting', 'prioritaskan bantuan untuk ubah alur menjadi state atau status penting'] },
+        { cmd: '/sequence', texts: ['fokus pada susun urutan interaksi atau langkah teknis', 'jalankan mode untuk susun urutan interaksi atau langkah teknis', 'ubah respons agar susun urutan interaksi atau langkah teknis', 'prioritaskan bantuan untuk susun urutan interaksi atau langkah teknis'] },
+        { cmd: '/diagram', texts: ['fokus pada deskripsikan diagram teks yang mudah divisualkan', 'jalankan mode untuk deskripsikan diagram teks yang mudah divisualkan', 'ubah respons agar deskripsikan diagram teks yang mudah divisualkan', 'prioritaskan bantuan untuk deskripsikan diagram teks yang mudah divisualkan'] },
+        { cmd: '/wire', texts: ['fokus pada buat kerangka tampilan teks yang sederhana', 'jalankan mode untuk buat kerangka tampilan teks yang sederhana', 'ubah respons agar buat kerangka tampilan teks yang sederhana', 'prioritaskan bantuan untuk buat kerangka tampilan teks yang sederhana'] },
+        { cmd: '/ux', texts: ['fokus pada utamakan kejelasan untuk pengguna akhir', 'jalankan mode untuk utamakan kejelasan untuk pengguna akhir', 'ubah respons agar utamakan kejelasan untuk pengguna akhir', 'prioritaskan bantuan untuk utamakan kejelasan untuk pengguna akhir'] },
+        { cmd: '/ui', texts: ['fokus pada rapikan struktur visual teks agar mudah dipindai', 'jalankan mode untuk rapikan struktur visual teks agar mudah dipindai', 'ubah respons agar rapikan struktur visual teks agar mudah dipindai', 'prioritaskan bantuan untuk rapikan struktur visual teks agar mudah dipindai'] },
+        { cmd: '/copyedit', texts: ['fokus pada rapikan kata dan struktur tanpa mengubah makna inti', 'jalankan mode untuk rapikan kata dan struktur tanpa mengubah makna inti', 'ubah respons agar rapikan kata dan struktur tanpa mengubah makna inti', 'prioritaskan bantuan untuk rapikan kata dan struktur tanpa mengubah makna inti'] },
+        { cmd: '/polish', texts: ['fokus pada haluskan hasil akhir agar lebih enak dibaca', 'jalankan mode untuk haluskan hasil akhir agar lebih enak dibaca', 'ubah respons agar haluskan hasil akhir agar lebih enak dibaca', 'prioritaskan bantuan untuk haluskan hasil akhir agar lebih enak dibaca'] },
+        { cmd: '/clarify', texts: ['fokus pada perjelas bagian yang masih samar', 'jalankan mode untuk perjelas bagian yang masih samar', 'ubah respons agar perjelas bagian yang masih samar', 'prioritaskan bantuan untuk perjelas bagian yang masih samar'] },
+        { cmd: '/simplify', texts: ['fokus pada sederhanakan penjelasan tanpa menghilangkan inti', 'jalankan mode untuk sederhanakan penjelasan tanpa menghilangkan inti', 'ubah respons agar sederhanakan penjelasan tanpa menghilangkan inti', 'prioritaskan bantuan untuk sederhanakan penjelasan tanpa menghilangkan inti'] },
+        { cmd: '/expand', texts: ['fokus pada perluas penjelasan dengan detail yang relevan', 'jalankan mode untuk perluas penjelasan dengan detail yang relevan', 'ubah respons agar perluas penjelasan dengan detail yang relevan', 'prioritaskan bantuan untuk perluas penjelasan dengan detail yang relevan'] },
+        { cmd: '/compress', texts: ['fokus pada ringkas isi tanpa membuang hal penting', 'jalankan mode untuk ringkas isi tanpa membuang hal penting', 'ubah respons agar ringkas isi tanpa membuang hal penting', 'prioritaskan bantuan untuk ringkas isi tanpa membuang hal penting'] },
+        { cmd: '/summary', texts: ['fokus pada buat rangkuman padat di bagian akhir', 'jalankan mode untuk buat rangkuman padat di bagian akhir', 'ubah respons agar buat rangkuman padat di bagian akhir', 'prioritaskan bantuan untuk buat rangkuman padat di bagian akhir'] },
+        { cmd: '/keywords', texts: ['fokus pada ekstrak kata kunci utama', 'jalankan mode untuk ekstrak kata kunci utama', 'ubah respons agar ekstrak kata kunci utama', 'prioritaskan bantuan untuk ekstrak kata kunci utama'] },
+        { cmd: '/tags', texts: ['fokus pada buat tag yang relevan dengan isi', 'jalankan mode untuk buat tag yang relevan dengan isi', 'ubah respons agar buat tag yang relevan dengan isi', 'prioritaskan bantuan untuk buat tag yang relevan dengan isi'] },
+        { cmd: '/title', texts: ['fokus pada buat judul yang sesuai dengan topik', 'jalankan mode untuk buat judul yang sesuai dengan topik', 'ubah respons agar buat judul yang sesuai dengan topik', 'prioritaskan bantuan untuk buat judul yang sesuai dengan topik'] },
+        { cmd: '/subtitle', texts: ['fokus pada buat subjudul pendukung yang jelas', 'jalankan mode untuk buat subjudul pendukung yang jelas', 'ubah respons agar buat subjudul pendukung yang jelas', 'prioritaskan bantuan untuk buat subjudul pendukung yang jelas'] },
+        { cmd: '/caption', texts: ['fokus pada buat caption singkat bila cocok', 'jalankan mode untuk buat caption singkat bila cocok', 'ubah respons agar buat caption singkat bila cocok', 'prioritaskan bantuan untuk buat caption singkat bila cocok'] },
+        { cmd: '/compare', texts: ['fokus pada bandingkan beberapa opsi secara rapi', 'jalankan mode untuk bandingkan beberapa opsi secara rapi', 'ubah respons agar bandingkan beberapa opsi secara rapi', 'prioritaskan bantuan untuk bandingkan beberapa opsi secara rapi'] },
+        { cmd: '/proscons', texts: ['fokus pada susun pro dan kontra secara seimbang', 'jalankan mode untuk susun pro dan kontra secara seimbang', 'ubah respons agar susun pro dan kontra secara seimbang', 'prioritaskan bantuan untuk susun pro dan kontra secara seimbang'] },
+        { cmd: '/decision', texts: ['fokus pada bantu memilih opsi paling masuk akal dengan alasan', 'jalankan mode untuk bantu memilih opsi paling masuk akal dengan alasan', 'ubah respons agar bantu memilih opsi paling masuk akal dengan alasan', 'prioritaskan bantuan untuk bantu memilih opsi paling masuk akal dengan alasan'] },
+        { cmd: '/risks', texts: ['fokus pada tandai risiko atau perhatian penting', 'jalankan mode untuk tandai risiko atau perhatian penting', 'ubah respons agar tandai risiko atau perhatian penting', 'prioritaskan bantuan untuk tandai risiko atau perhatian penting'] },
+        { cmd: '/benefits', texts: ['fokus pada sorot manfaat utama dari opsi yang dibahas', 'jalankan mode untuk sorot manfaat utama dari opsi yang dibahas', 'ubah respons agar sorot manfaat utama dari opsi yang dibahas', 'prioritaskan bantuan untuk sorot manfaat utama dari opsi yang dibahas'] },
+        { cmd: '/tradeoffs', texts: ['fokus pada jelaskan kompromi antar pilihan', 'jalankan mode untuk jelaskan kompromi antar pilihan', 'ubah respons agar jelaskan kompromi antar pilihan', 'prioritaskan bantuan untuk jelaskan kompromi antar pilihan'] },
+        { cmd: '/strategy', texts: ['fokus pada susun strategi aman dan legal sesuai konteks', 'jalankan mode untuk susun strategi aman dan legal sesuai konteks', 'ubah respons agar susun strategi aman dan legal sesuai konteks', 'prioritaskan bantuan untuk susun strategi aman dan legal sesuai konteks'] },
+        { cmd: '/plan', texts: ['fokus pada buat rencana langkah yang runtut', 'jalankan mode untuk buat rencana langkah yang runtut', 'ubah respons agar buat rencana langkah yang runtut', 'prioritaskan bantuan untuk buat rencana langkah yang runtut'] },
+        { cmd: '/roadmap', texts: ['fokus pada bagi rencana menjadi beberapa fase', 'jalankan mode untuk bagi rencana menjadi beberapa fase', 'ubah respons agar bagi rencana menjadi beberapa fase', 'prioritaskan bantuan untuk bagi rencana menjadi beberapa fase'] },
+        { cmd: '/milestones', texts: ['fokus pada pecah tujuan ke milestone yang jelas', 'jalankan mode untuk pecah tujuan ke milestone yang jelas', 'ubah respons agar pecah tujuan ke milestone yang jelas', 'prioritaskan bantuan untuk pecah tujuan ke milestone yang jelas'] },
+        { cmd: '/next', texts: ['fokus pada akhiri dengan langkah berikutnya yang disarankan', 'jalankan mode untuk akhiri dengan langkah berikutnya yang disarankan', 'ubah respons agar akhiri dengan langkah berikutnya yang disarankan', 'prioritaskan bantuan untuk akhiri dengan langkah berikutnya yang disarankan'] },
+        { cmd: '/resources', texts: ['fokus pada sebutkan sumber daya yang perlu disiapkan', 'jalankan mode untuk sebutkan sumber daya yang perlu disiapkan', 'ubah respons agar sebutkan sumber daya yang perlu disiapkan', 'prioritaskan bantuan untuk sebutkan sumber daya yang perlu disiapkan'] },
+        { cmd: '/tools', texts: ['fokus pada cantumkan alat umum yang bisa membantu', 'jalankan mode untuk cantumkan alat umum yang bisa membantu', 'ubah respons agar cantumkan alat umum yang bisa membantu', 'prioritaskan bantuan untuk cantumkan alat umum yang bisa membantu'] },
+        { cmd: '/benchmark', texts: ['fokus pada buat tolok ukur sederhana untuk evaluasi', 'jalankan mode untuk buat tolok ukur sederhana untuk evaluasi', 'ubah respons agar buat tolok ukur sederhana untuk evaluasi', 'prioritaskan bantuan untuk buat tolok ukur sederhana untuk evaluasi'] },
+        { cmd: '/profile', texts: ['fokus pada identifikasi bagian yang paling menonjol atau berat', 'jalankan mode untuk identifikasi bagian yang paling menonjol atau berat', 'ubah respons agar identifikasi bagian yang paling menonjol atau berat', 'prioritaskan bantuan untuk identifikasi bagian yang paling menonjol atau berat'] },
+        { cmd: '/optimize', texts: ['fokus pada sarankan optimasi aman dan masuk akal', 'jalankan mode untuk sarankan optimasi aman dan masuk akal', 'ubah respons agar sarankan optimasi aman dan masuk akal', 'prioritaskan bantuan untuk sarankan optimasi aman dan masuk akal'] },
+        { cmd: '/quality', texts: ['fokus pada fokus pada kualitas, kejelasan, dan konsistensi', 'jalankan mode untuk fokus pada kualitas, kejelasan, dan konsistensi', 'ubah respons agar fokus pada kualitas, kejelasan, dan konsistensi', 'prioritaskan bantuan untuk fokus pada kualitas, kejelasan, dan konsistensi'] },
+        { cmd: '/consistency', texts: ['fokus pada cek konsistensi istilah dan struktur', 'jalankan mode untuk cek konsistensi istilah dan struktur', 'ubah respons agar cek konsistensi istilah dan struktur', 'prioritaskan bantuan untuk cek konsistensi istilah dan struktur'] },
+        { cmd: '/verify', texts: ['fokus pada pisahkan yang pasti dan yang masih asumsi', 'jalankan mode untuk pisahkan yang pasti dan yang masih asumsi', 'ubah respons agar pisahkan yang pasti dan yang masih asumsi', 'prioritaskan bantuan untuk pisahkan yang pasti dan yang masih asumsi'] },
+        { cmd: '/assumptions', texts: ['fokus pada jelaskan asumsi yang dipakai', 'jalankan mode untuk jelaskan asumsi yang dipakai', 'ubah respons agar jelaskan asumsi yang dipakai', 'prioritaskan bantuan untuk jelaskan asumsi yang dipakai'] },
+        { cmd: '/scope', texts: ['fokus pada batasi jawaban pada ruang lingkup yang relevan', 'jalankan mode untuk batasi jawaban pada ruang lingkup yang relevan', 'ubah respons agar batasi jawaban pada ruang lingkup yang relevan', 'prioritaskan bantuan untuk batasi jawaban pada ruang lingkup yang relevan'] },
+        { cmd: '/constraints', texts: ['fokus pada jelaskan batasan penting dari solusi', 'jalankan mode untuk jelaskan batasan penting dari solusi', 'ubah respons agar jelaskan batasan penting dari solusi', 'prioritaskan bantuan untuk jelaskan batasan penting dari solusi'] },
+        { cmd: '/observe', texts: ['fokus pada catat temuan utama secara ringkas', 'jalankan mode untuk catat temuan utama secara ringkas', 'ubah respons agar catat temuan utama secara ringkas', 'prioritaskan bantuan untuk catat temuan utama secara ringkas'] },
+        { cmd: '/findings', texts: ['fokus pada susun daftar temuan penting', 'jalankan mode untuk susun daftar temuan penting', 'ubah respons agar susun daftar temuan penting', 'prioritaskan bantuan untuk susun daftar temuan penting'] },
+        { cmd: '/report', texts: ['fokus pada ubah hasil menjadi laporan singkat', 'jalankan mode untuk ubah hasil menjadi laporan singkat', 'ubah respons agar ubah hasil menjadi laporan singkat', 'prioritaskan bantuan untuk ubah hasil menjadi laporan singkat'] },
+        { cmd: '/brief', texts: ['fokus pada buat versi pendek dan cepat dibaca', 'jalankan mode untuk buat versi pendek dan cepat dibaca', 'ubah respons agar buat versi pendek dan cepat dibaca', 'prioritaskan bantuan untuk buat versi pendek dan cepat dibaca'] },
+        { cmd: '/deep', texts: ['fokus pada bahas lebih dalam dengan tetap rapi', 'jalankan mode untuk bahas lebih dalam dengan tetap rapi', 'ubah respons agar bahas lebih dalam dengan tetap rapi', 'prioritaskan bantuan untuk bahas lebih dalam dengan tetap rapi'] },
+        { cmd: '/drilldown', texts: ['fokus pada mulai dari gambaran umum lalu masuk detail', 'jalankan mode untuk mulai dari gambaran umum lalu masuk detail', 'ubah respons agar mulai dari gambaran umum lalu masuk detail', 'prioritaskan bantuan untuk mulai dari gambaran umum lalu masuk detail'] },
+        { cmd: '/overview', texts: ['fokus pada berikan gambaran besar lebih dulu', 'jalankan mode untuk berikan gambaran besar lebih dulu', 'ubah respons agar berikan gambaran besar lebih dulu', 'prioritaskan bantuan untuk berikan gambaran besar lebih dulu'] },
+        { cmd: '/starter', texts: ['fokus pada buat versi yang ramah untuk pemula', 'jalankan mode untuk buat versi yang ramah untuk pemula', 'ubah respons agar buat versi yang ramah untuk pemula', 'prioritaskan bantuan untuk buat versi yang ramah untuk pemula'] },
+        { cmd: '/advanced', texts: ['fokus pada buat versi yang lebih lanjut dan lebih dalam', 'jalankan mode untuk buat versi yang lebih lanjut dan lebih dalam', 'ubah respons agar buat versi yang lebih lanjut dan lebih dalam', 'prioritaskan bantuan untuk buat versi yang lebih lanjut dan lebih dalam'] },
+        { cmd: '/quiz', texts: ['fokus pada tambahkan pertanyaan latihan singkat', 'jalankan mode untuk tambahkan pertanyaan latihan singkat', 'ubah respons agar tambahkan pertanyaan latihan singkat', 'prioritaskan bantuan untuk tambahkan pertanyaan latihan singkat'] },
+        { cmd: '/flashcard', texts: ['fokus pada ubah inti materi menjadi format flashcard', 'jalankan mode untuk ubah inti materi menjadi format flashcard', 'ubah respons agar ubah inti materi menjadi format flashcard', 'prioritaskan bantuan untuk ubah inti materi menjadi format flashcard'] },
+        { cmd: '/mentor', texts: ['fokus pada jawab seperti mentor yang membimbing dengan jelas', 'jalankan mode untuk jawab seperti mentor yang membimbing dengan jelas', 'ubah respons agar jawab seperti mentor yang membimbing dengan jelas', 'prioritaskan bantuan untuk jawab seperti mentor yang membimbing dengan jelas'] },
+        { cmd: '/practice', texts: ['fokus pada sertakan latihan sederhana yang aman', 'jalankan mode untuk sertakan latihan sederhana yang aman', 'ubah respons agar sertakan latihan sederhana yang aman', 'prioritaskan bantuan untuk sertakan latihan sederhana yang aman'] },
+        { cmd: '/reflection', texts: ['fokus pada akhiri dengan pertanyaan refleksi singkat', 'jalankan mode untuk akhiri dengan pertanyaan refleksi singkat', 'ubah respons agar akhiri dengan pertanyaan refleksi singkat', 'prioritaskan bantuan untuk akhiri dengan pertanyaan refleksi singkat'] },
+        { cmd: '/translate', texts: ['fokus pada terjemahkan isi secara natural bila diminta', 'jalankan mode untuk terjemahkan isi secara natural bila diminta', 'ubah respons agar terjemahkan isi secara natural bila diminta', 'prioritaskan bantuan untuk terjemahkan isi secara natural bila diminta'] },
+        { cmd: '/bilingual', texts: ['fokus pada tampilkan hasil dalam dua bahasa bila cocok', 'jalankan mode untuk tampilkan hasil dalam dua bahasa bila cocok', 'ubah respons agar tampilkan hasil dalam dua bahasa bila cocok', 'prioritaskan bantuan untuk tampilkan hasil dalam dua bahasa bila cocok'] },
+        { cmd: '/vocab', texts: ['fokus pada ekstrak istilah penting dan artinya', 'jalankan mode untuk ekstrak istilah penting dan artinya', 'ubah respons agar ekstrak istilah penting dan artinya', 'prioritaskan bantuan untuk ekstrak istilah penting dan artinya'] },
+        { cmd: '/glossary', texts: ['fokus pada susun glosarium kecil dari istilah utama', 'jalankan mode untuk susun glosarium kecil dari istilah utama', 'ubah respons agar susun glosarium kecil dari istilah utama', 'prioritaskan bantuan untuk susun glosarium kecil dari istilah utama'] },
+        { cmd: '/cheatsheet', texts: ['fokus pada ubah hasil menjadi lembar ringkas cepat pakai', 'jalankan mode untuk ubah hasil menjadi lembar ringkas cepat pakai', 'ubah respons agar ubah hasil menjadi lembar ringkas cepat pakai', 'prioritaskan bantuan untuk ubah hasil menjadi lembar ringkas cepat pakai'] },
+        { cmd: '/cards', texts: ['fokus pada pecah poin utama menjadi kartu informasi singkat', 'jalankan mode untuk pecah poin utama menjadi kartu informasi singkat', 'ubah respons agar pecah poin utama menjadi kartu informasi singkat', 'prioritaskan bantuan untuk pecah poin utama menjadi kartu informasi singkat'] },
+        { cmd: '/faq', texts: ['fokus pada ubah isi menjadi format tanya jawab', 'jalankan mode untuk ubah isi menjadi format tanya jawab', 'ubah respons agar ubah isi menjadi format tanya jawab', 'prioritaskan bantuan untuk ubah isi menjadi format tanya jawab'] },
+        { cmd: '/promptcraft', texts: ['fokus pada rapikan prompt agar lebih jelas dan konsisten', 'jalankan mode untuk rapikan prompt agar lebih jelas dan konsisten', 'ubah respons agar rapikan prompt agar lebih jelas dan konsisten', 'prioritaskan bantuan untuk rapikan prompt agar lebih jelas dan konsisten'] },
+        { cmd: '/promptcheck', texts: ['fokus pada cek prompt dari sisi struktur dan kejelasan', 'jalankan mode untuk cek prompt dari sisi struktur dan kejelasan', 'ubah respons agar cek prompt dari sisi struktur dan kejelasan', 'prioritaskan bantuan untuk cek prompt dari sisi struktur dan kejelasan'] },
+        { cmd: '/redteam-safe', texts: ['fokus pada uji prompt dalam simulasi aman dan etis', 'jalankan mode untuk uji prompt dalam simulasi aman dan etis', 'ubah respons agar uji prompt dalam simulasi aman dan etis', 'prioritaskan bantuan untuk uji prompt dalam simulasi aman dan etis'] },
+        { cmd: '/hardening', texts: ['fokus pada beri saran penguatan konfigurasi atau praktik aman', 'jalankan mode untuk beri saran penguatan konfigurasi atau praktik aman', 'ubah respons agar beri saran penguatan konfigurasi atau praktik aman', 'prioritaskan bantuan untuk beri saran penguatan konfigurasi atau praktik aman'] },
+        { cmd: '/sanitize', texts: ['fokus pada bersihkan input atau output dari bagian yang berisiko', 'jalankan mode untuk bersihkan input atau output dari bagian yang berisiko', 'ubah respons agar bersihkan input atau output dari bagian yang berisiko', 'prioritaskan bantuan untuk bersihkan input atau output dari bagian yang berisiko'] },
+        { cmd: '/encode', texts: ['fokus pada ubah isi ke bentuk encoding umum yang aman', 'jalankan mode untuk ubah isi ke bentuk encoding umum yang aman', 'ubah respons agar ubah isi ke bentuk encoding umum yang aman', 'prioritaskan bantuan untuk ubah isi ke bentuk encoding umum yang aman'] },
+        { cmd: '/decode', texts: ['fokus pada jelaskan atau ubah hasil decoding umum yang legal', 'jalankan mode untuk jelaskan atau ubah hasil decoding umum yang legal', 'ubah respons agar jelaskan atau ubah hasil decoding umum yang legal', 'prioritaskan bantuan untuk jelaskan atau ubah hasil decoding umum yang legal'] },
+        { cmd: '/hash', texts: ['fokus pada jelaskan hash atau buat contoh hashing yang aman', 'jalankan mode untuk jelaskan hash atau buat contoh hashing yang aman', 'ubah respons agar jelaskan hash atau buat contoh hashing yang aman', 'prioritaskan bantuan untuk jelaskan hash atau buat contoh hashing yang aman'] },
+        { cmd: '/token', texts: ['fokus pada jelaskan struktur token secara edukatif tanpa penyalahgunaan', 'jalankan mode untuk jelaskan struktur token secara edukatif tanpa penyalahgunaan', 'ubah respons agar jelaskan struktur token secara edukatif tanpa penyalahgunaan', 'prioritaskan bantuan untuk jelaskan struktur token secara edukatif tanpa penyalahgunaan'] },
+        { cmd: '/headersafe', texts: ['fokus pada fokus pada header yang baik dan defensif', 'jalankan mode untuk fokus pada header yang baik dan defensif', 'ubah respons agar fokus pada header yang baik dan defensif', 'prioritaskan bantuan untuk fokus pada header yang baik dan defensif'] },
+        { cmd: '/corscheck', texts: ['fokus pada jelaskan konfigurasi CORS yang aman', 'jalankan mode untuk jelaskan konfigurasi CORS yang aman', 'ubah respons agar jelaskan konfigurasi CORS yang aman', 'prioritaskan bantuan untuk jelaskan konfigurasi CORS yang aman'] },
+        { cmd: '/csrfsafe', texts: ['fokus pada jelaskan mitigasi CSRF secara defensif', 'jalankan mode untuk jelaskan mitigasi CSRF secara defensif', 'ubah respons agar jelaskan mitigasi CSRF secara defensif', 'prioritaskan bantuan untuk jelaskan mitigasi CSRF secara defensif'] },
+        { cmd: '/xsssafe', texts: ['fokus pada jelaskan pencegahan XSS secara defensif', 'jalankan mode untuk jelaskan pencegahan XSS secara defensif', 'ubah respons agar jelaskan pencegahan XSS secara defensif', 'prioritaskan bantuan untuk jelaskan pencegahan XSS secara defensif'] },
+        { cmd: '/validate', texts: ['fokus pada susun aturan validasi input yang aman', 'jalankan mode untuk susun aturan validasi input yang aman', 'ubah respons agar susun aturan validasi input yang aman', 'prioritaskan bantuan untuk susun aturan validasi input yang aman'] },
+        { cmd: '/escape', texts: ['fokus pada jelaskan escaping yang benar untuk konteks teknis', 'jalankan mode untuk jelaskan escaping yang benar untuk konteks teknis', 'ubah respons agar jelaskan escaping yang benar untuk konteks teknis', 'prioritaskan bantuan untuk jelaskan escaping yang benar untuk konteks teknis'] },
+        { cmd: '/threatmodel', texts: ['fokus pada buat threat model tingkat tinggi yang defensif', 'jalankan mode untuk buat threat model tingkat tinggi yang defensif', 'ubah respons agar buat threat model tingkat tinggi yang defensif', 'prioritaskan bantuan untuk buat threat model tingkat tinggi yang defensif'] },
+        { cmd: '/ioc', texts: ['fokus pada susun contoh indikator kompromi untuk latihan aman', 'jalankan mode untuk susun contoh indikator kompromi untuk latihan aman', 'ubah respons agar susun contoh indikator kompromi untuk latihan aman', 'prioritaskan bantuan untuk susun contoh indikator kompromi untuk latihan aman'] },
+        { cmd: '/triage', texts: ['fokus pada urutkan temuan berdasarkan prioritas penanganan', 'jalankan mode untuk urutkan temuan berdasarkan prioritas penanganan', 'ubah respons agar urutkan temuan berdasarkan prioritas penanganan', 'prioritaskan bantuan untuk urutkan temuan berdasarkan prioritas penanganan'] },
+        { cmd: '/forensics', texts: ['fokus pada fokus pada analisis forensik tingkat dasar yang legal', 'jalankan mode untuk fokus pada analisis forensik tingkat dasar yang legal', 'ubah respons agar fokus pada analisis forensik tingkat dasar yang legal', 'prioritaskan bantuan untuk fokus pada analisis forensik tingkat dasar yang legal'] },
+        { cmd: '/syslog', texts: ['fokus pada jelaskan pola penting dalam syslog', 'jalankan mode untuk jelaskan pola penting dalam syslog', 'ubah respons agar jelaskan pola penting dalam syslog', 'prioritaskan bantuan untuk jelaskan pola penting dalam syslog'] },
+        { cmd: '/sigma', texts: ['fokus pada buat aturan Sigma defensif tingkat dasar', 'jalankan mode untuk buat aturan Sigma defensif tingkat dasar', 'ubah respons agar buat aturan Sigma defensif tingkat dasar', 'prioritaskan bantuan untuk buat aturan Sigma defensif tingkat dasar'] },
+        { cmd: '/yara', texts: ['fokus pada buat aturan YARA defensif sederhana untuk contoh aman', 'jalankan mode untuk buat aturan YARA defensif sederhana untuk contoh aman', 'ubah respons agar buat aturan YARA defensif sederhana untuk contoh aman', 'prioritaskan bantuan untuk buat aturan YARA defensif sederhana untuk contoh aman'] },
+        { cmd: '/mitre', texts: ['fokus pada petakan temuan ke kategori ATT&CK secara tingkat tinggi', 'jalankan mode untuk petakan temuan ke kategori ATT&CK secara tingkat tinggi', 'ubah respons agar petakan temuan ke kategori ATT&CK secara tingkat tinggi', 'prioritaskan bantuan untuk petakan temuan ke kategori ATT&CK secara tingkat tinggi'] },
+        { cmd: '/incident', texts: ['fokus pada susun respons insiden tingkat dasar yang legal', 'jalankan mode untuk susun respons insiden tingkat dasar yang legal', 'ubah respons agar susun respons insiden tingkat dasar yang legal', 'prioritaskan bantuan untuk susun respons insiden tingkat dasar yang legal'] },
+        { cmd: '/playbook', texts: ['fokus pada buat playbook respons yang ringkas', 'jalankan mode untuk buat playbook respons yang ringkas', 'ubah respons agar buat playbook respons yang ringkas', 'prioritaskan bantuan untuk buat playbook respons yang ringkas'] },
+        { cmd: '/monitor', texts: ['fokus pada sarankan apa yang perlu dimonitor', 'jalankan mode untuk sarankan apa yang perlu dimonitor', 'ubah respons agar sarankan apa yang perlu dimonitor', 'prioritaskan bantuan untuk sarankan apa yang perlu dimonitor'] },
+        { cmd: '/alerts', texts: ['fokus pada rancang alert dasar yang jelas', 'jalankan mode untuk rancang alert dasar yang jelas', 'ubah respons agar rancang alert dasar yang jelas', 'prioritaskan bantuan untuk rancang alert dasar yang jelas'] },
+        { cmd: '/baseline', texts: ['fokus pada tetapkan baseline sederhana untuk perbandingan', 'jalankan mode untuk tetapkan baseline sederhana untuk perbandingan', 'ubah respons agar tetapkan baseline sederhana untuk perbandingan', 'prioritaskan bantuan untuk tetapkan baseline sederhana untuk perbandingan'] },
+        { cmd: '/telemetry', texts: ['fokus pada jelaskan telemetry yang relevan untuk pengamatan', 'jalankan mode untuk jelaskan telemetry yang relevan untuk pengamatan', 'ubah respons agar jelaskan telemetry yang relevan untuk pengamatan', 'prioritaskan bantuan untuk jelaskan telemetry yang relevan untuk pengamatan'] },
+        { cmd: '/packet-safe', texts: ['fokus pada jelaskan paket jaringan secara edukatif dan aman', 'jalankan mode untuk jelaskan paket jaringan secara edukatif dan aman', 'ubah respons agar jelaskan paket jaringan secara edukatif dan aman', 'prioritaskan bantuan untuk jelaskan paket jaringan secara edukatif dan aman'] },
+        { cmd: '/dnscheck', texts: ['fokus pada jelaskan analisis DNS dasar yang legal', 'jalankan mode untuk jelaskan analisis DNS dasar yang legal', 'ubah respons agar jelaskan analisis DNS dasar yang legal', 'prioritaskan bantuan untuk jelaskan analisis DNS dasar yang legal'] },
+        { cmd: '/httplab', texts: ['fokus pada buat simulasi HTTP yang aman untuk belajar', 'jalankan mode untuk buat simulasi HTTP yang aman untuk belajar', 'ubah respons agar buat simulasi HTTP yang aman untuk belajar', 'prioritaskan bantuan untuk buat simulasi HTTP yang aman untuk belajar'] },
+        { cmd: '/netmap-safe', texts: ['fokus pada petakan komponen jaringan secara konseptual dan aman', 'jalankan mode untuk petakan komponen jaringan secara konseptual dan aman', 'ubah respons agar petakan komponen jaringan secara konseptual dan aman', 'prioritaskan bantuan untuk petakan komponen jaringan secara konseptual dan aman'] }
+      ],
+      commandTemplates: [
+        'Jika user mengetik {cmd}, {text}.',
+        'Bila user menulis {cmd}, maka {text}.',
+        'Untuk command {cmd}, tugasmu adalah {text}.',
+        'Saat menerima {cmd}, kamu harus {text}.'
+      ]
+    };
+
+    function pick(arr, count = 1) {
+      const copy = [...arr];
+      const out = [];
+      while (copy.length && out.length < count) {
+        const index = Math.floor(Math.random() * copy.length);
+        out.push(copy.splice(index, 1)[0]);
+      }
+      return out;
+    }
+
+    function randomBetween(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function shuffle(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function fill(text, map) {
+      return text.replace(/\{(\w+)\}/g, (_, key) => map[key] ?? '');
+    }
+
+    function getStyleBank(mode) {
+      if (mode === 'strict') return banks.styleStrict;
+      if (mode === 'friendly') return banks.styleFriendly;
+      if (mode === 'compact') return banks.styleCompact;
+      return banks.styleBalanced;
+    }
+
+    function createKey(parts) {
+      return parts.join('||');
+    }
+
+    function buildMenuList(title, commands, frame) {
+      return [frame.open + title + frame.close, '', frame.sep, '', ...commands].join('\n');
+    }
+
+    function buildCommandBlock(name) {
+      const menuCmd = '/menu';
+      const activateCmd = '/guide';
+      const codeCmd = '/code';
+      const resetCmd = pick(['/resetmode', '/restore', '/baseline', '/clearstate'])[0];
+      const frame = pick(banks.menuFrames)[0];
+      const optionalCount = randomBetween(12, 26);
+      const selected = shuffle(banks.optionalCommands).filter(item => item.cmd !== codeCmd).slice(0, optionalCount);
+      const orderedOptional = shuffle(selected);
+      const commands = [menuCmd, activateCmd, codeCmd, ...orderedOptional.map(item => item.cmd), resetCmd];
+      const menuTitle = `${name} ${pick(banks.menuHeadings)[0]}`;
+      const menuList = buildMenuList(menuTitle, commands, frame);
+      const commandLines = [];
+      const menuLine = pick(banks.menuLine)[0];
+      const activationExact = 'Ai Active';
+      commandLines.push(`- ${menuLine}
+${menuList}`);
+      commandLines.push(`- Jika user mengetik ${activateCmd}, balas tepat: ${activationExact}`);
+      commandLines.push(`- Jika user mengetik ${activateCmd} [pertanyaan], aktifkan mode tanya jawab umum untuk topik legal maupun sensitif, tetapi tetap tidak boleh memberi instruksi berbahaya, kriminal, atau merusak; arahkan ke penjelasan aman, konsekuensi, pencegahan, atau alternatif legal.`);
+      commandLines.push(`- Jika user mengetik ${codeCmd}, aktifkan mode coding, debugging, analisis script, secure coding, sandbox, homelab, dan pembelajaran teknis defensif.`);
+      commandLines.push(`- Jika user mengetik ${codeCmd} [permintaan], bantu hanya untuk penggunaan legal, edukatif, atau simulasi aman; jangan berikan malware, pembobolan, pencurian data, atau serangan ke target nyata.`);
+
+      const chosenTexts = [`${codeCmd}:defensive-tech-mode`, `${activateCmd}:safe-sensitive-qa`];
+      for (const item of orderedOptional) {
+        const text = pick(item.texts)[0];
+        const template = pick(banks.commandTemplates)[0];
+        chosenTexts.push(`${item.cmd}:${text}`);
+        commandLines.push('- ' + fill(template, { cmd: item.cmd, text }));
+      }
+
+      const resetText = pick(banks.resetLine)[0];
+      commandLines.push(`- ${fill(pick(banks.commandTemplates)[0], { cmd: resetCmd, text: resetText })}`);
+
+      return {
+        commands,
+        menuCmd,
+        activateCmd,
+        resetCmd,
+        activationExact,
+        menuList,
+        lines: commandLines,
+        key: [commands.join(','), chosenTexts.join('|'), resetText, menuLine, activateCmd, resetCmd, frame.open, frame.sep].join('||')
+      };
+    }
+
+    function renderPrompt(layoutId, data) {
+      const {
+        name, owner, extra, mode,
+        opening, role,
+        styleLines, behaviorLines, constraintLines, structureLines, closerLines,
+        commandHeading, commandNote, commandBlock,
+        ageValue, habitValue, statusValue, roleValue, memoryValue, systemValue,
+        personaTitle, rulesTitle, modeTitle, languageTitle, activationNote
+      } = data;
+
+      const exactLine = `Jika command aktivasi dipakai, misi pertama cukup ketik: "${commandBlock.activationExact}"`;
+
+      const layouts = {
+        dossier: [
+          `SYSTEM NAME : <[( ${name.toUpperCase()} )]>`,
+          '',
+          `Nama : ${name}`,
+          `Umur : ${ageValue}`,
+          `Kebiasaan : ${habitValue}`,
+          `Status : ${statusValue}`,
+          `Peran : ${roleValue}`,
+          `System : ${systemValue}`,
+          `Memory : ${memoryValue}`,
+          `Operator : ${owner}`,
+          '',
+          opening,
+          role,
+          '',
+          personaTitle,
+          ...styleLines.map(line => '- ' + line),
+          ...behaviorLines.map(line => '- ' + line),
+          '',
+          rulesTitle,
+          ...constraintLines.map((line, idx) => `${idx + 1}. ${line}`),
+          `${constraintLines.length + 1}. ${commandNote}`,
+          '',
+          modeTitle,
+          `Mode default : ${mode}`,
+          `Aktivasi utama : ${commandBlock.activateCmd}`,
+          `Pusat perintah : ${commandBlock.menuCmd}`,
+          `Reset mode : ${commandBlock.resetCmd}`,
+          '',
+          languageTitle,
+          '- Gunakan bahasa indonesia secara natural dan jelas.',
+          '- Ikuti format yang diminta user bila aman dan masuk akal.',
+          '- Pertahankan struktur yang rapi, mudah dipindai, dan siap dipakai.',
+          '- Catatan tambahan: ' + extra,
+          '',
+          commandHeading,
+          ...commandBlock.lines,
+          `- ${activationNote}`,
+          '',
+          exactLine,
+          '',
+          'Catatan penutup:',
+          ...structureLines.map(line => '- ' + line),
+          ...closerLines.map(line => '- ' + line)
+        ].join('\n'),
+
+        protocol: [
+          `[ PROTOCOL SHEET :: ${name.toUpperCase()} ]`,
+          `owner=${owner}`,
+          `default_mode=${mode}`,
+          '',
+          '[ IDENTITY ]',
+          `name=${name}`,
+          `status=${statusValue}`,
+          `habit=${habitValue}`,
+          `role=${roleValue}`,
+          `memory=${memoryValue}`,
+          `system=${systemValue}`,
+          '',
+          '[ CORE ]',
+          `- ${opening}`,
+          `- ${role}`,
+          '',
+          '[ RESPONSE PROFILE ]',
+          ...styleLines.map(line => `- ${line}`),
+          ...behaviorLines.map(line => `- ${line}`),
+          '',
+          '[ COMMAND ROUTER ]',
+          ...commandBlock.lines,
+          `- ${activationNote}`,
+          `- ${exactLine}`,
+          '',
+          '[ SAFETY BOUNDARY ]',
+          ...constraintLines.map((line, idx) => `${idx + 1}) ${line}`),
+          '',
+          '[ END NOTES ]',
+          `- ${commandNote}`,
+          ...structureLines.map(line => `- ${line}`),
+          ...closerLines.map(line => `- ${line}`)
+        ].join('\n'),
+
+        manifest: [
+          `<<< ${name.toUpperCase()} / RESPONSE MANIFEST >>>`,
+          '',
+          `Operator  : ${owner}`,
+          `Status    : ${statusValue}`,
+          `Default   : ${mode}`,
+          `Sync      : ${systemValue}`,
+          '',
+          '— PROFIL —',
+          `Nama      : ${name}`,
+          `Peran     : ${roleValue}`,
+          `Kebiasaan : ${habitValue}`,
+          `Memori    : ${memoryValue}`,
+          `Usia      : ${ageValue}`,
+          '',
+          '— INTI KERJA —',
+          opening,
+          role,
+          ...styleLines.map(line => '• ' + line),
+          ...behaviorLines.map(line => '• ' + line),
+          '',
+          '— MODE & COMMAND —',
+          `Mode aktif awal: ${mode}`,
+          `Perintah buka menu: ${commandBlock.menuCmd}`,
+          `Perintah aktivasi: ${commandBlock.activateCmd}`,
+          `Perintah reset: ${commandBlock.resetCmd}`,
+          ...commandBlock.lines,
+          exactLine,
+          '',
+          '— BATAS KERJA —',
+          ...constraintLines.map(line => '• ' + line),
+          `• ${commandNote}`,
+          '',
+          '— PENUTUP —',
+          ...structureLines.map(line => '• ' + line),
+          ...closerLines.map(line => '• ' + line)
+        ].join('\n'),
+
+        console: [
+          `SYSTEM_NAME="${name.toUpperCase()}"`,
+          `OWNER="${owner}"`,
+          `DEFAULT_MODE="${mode}"`,
+          '',
+          'PROFILE {',
+          `  name: "${name}"`,
+          `  age: "${ageValue}"`,
+          `  status: "${statusValue}"`,
+          `  role: "${roleValue}"`,
+          `  habit: "${habitValue}"`,
+          `  memory: "${memoryValue}"`,
+          `  system: "${systemValue}"`,
+          '}',
+          '',
+          'CORE = [',
+          `  "${opening}",`,
+          `  "${role}"`,
+          ']',
+          '',
+          'STYLE = [',
+          ...styleLines.map(line => `  "${line}",`),
+          ...behaviorLines.map((line, idx, arr) => `  "${line}"${idx === arr.length - 1 ? '' : ','}`),
+          ']',
+          '',
+          'COMMAND_ROUTER = [',
+          ...commandBlock.lines.map(line => `  ${JSON.stringify(line)},`),
+          `  ${JSON.stringify(activationNote)},`,
+          `  ${JSON.stringify(exactLine)}`,
+          ']',
+          '',
+          'BOUNDARY = [',
+          ...constraintLines.map((line, idx, arr) => `  "${line}"${idx === arr.length - 1 ? '' : ','}`),
+          ']',
+          '',
+          'NOTES = [',
+          `  "${commandNote}",`,
+          ...structureLines.map(line => `  "${line}",`),
+          ...closerLines.map((line, idx, arr) => `  "${line}"${idx === arr.length - 1 ? '' : ','}`),
+          ']'
+        ].join('\n'),
+
+        markdown: [
+          `# ${name}`,
+          '',
+          `**Owner:** ${owner}`,
+          `**Status:** ${statusValue}`,
+          `**Default mode:** ${mode}`,
+          '',
+          '## Profil',
+          `- Peran: ${roleValue}`,
+          `- Kebiasaan: ${habitValue}`,
+          `- System: ${systemValue}`,
+          `- Memory: ${memoryValue}`,
+          '',
+          '## Identitas Kerja',
+          `- ${opening}`,
+          `- ${role}`,
+          '',
+          '## Gaya Respons',
+          ...styleLines.map(line => `- ${line}`),
+          ...behaviorLines.map(line => `- ${line}`),
+          '',
+          `## ${commandHeading}`,
+          ...commandBlock.lines,
+          `- ${activationNote}`,
+          `- ${exactLine}`,
+          '',
+          '## Batas Kerja',
+          ...constraintLines.map(line => `- ${line}`),
+          `- ${commandNote}`,
+          '',
+          '## Penutup',
+          ...structureLines.map(line => `- ${line}`),
+          ...closerLines.map(line => `- ${line}`)
+        ].join('\n'),
+
+        memo: [
+          `PROMPT CARD / ${name.toUpperCase()}`,
+          '--------------------------------',
+          `Operator     : ${owner}`,
+          `Mode awal     : ${mode}`,
+          `Aktivasi      : ${commandBlock.activateCmd}`,
+          `Pusat menu    : ${commandBlock.menuCmd}`,
+          `Reset         : ${commandBlock.resetCmd}`,
+          '',
+          'Ringkasan peran:',
+          `- ${opening}`,
+          `- ${role}`,
+          '',
+          'Gaya kerja:',
+          ...styleLines.map(line => `- ${line}`),
+          ...behaviorLines.map(line => `- ${line}`),
+          '',
+          'Lembar perintah:',
+          ...commandBlock.lines,
+          `- ${activationNote}`,
+          `- ${exactLine}`,
+          '',
+          'Batas dan catatan:',
+          ...constraintLines.map(line => `- ${line}`),
+          `- ${commandNote}`,
+          ...structureLines.map(line => `- ${line}`),
+          ...closerLines.map(line => `- ${line}`)
+        ].join('\n')
+      };
+
+      return layouts[layoutId] || layouts.dossier;
+    }
+
+    function buildPrompt() {
+      const name = (el('assistantName').value || 'Workspace Helper').trim() || 'Workspace Helper';
+      const owner = (el('ownerName').value || 'Nar44').trim() || 'Nar44';
+      const extra = (el('extraNote').value || 'tidak ada').trim() || 'tidak ada';
+      const mode = el('mode').value;
+      const styleBank = getStyleBank(mode);
+
+      let attempts = 0;
+      let finalPrompt = '';
+      let meta = '';
+
+      while (attempts < 800) {
+        attempts++;
+
+        const opening = pick(banks.openings)[0];
+        const role = pick(banks.roles)[0];
+        const styleLines = pick(styleBank, 3);
+        const behaviorLines = pick(banks.behavior, 2);
+        const constraintLines = pick(banks.constraints, 3);
+        const structureLines = pick(banks.structure, 2);
+        const closerLines = pick(banks.closers, 2);
+        const commandHeading = pick(banks.commandIntro)[0];
+        const commandNote = pick(banks.commandNote)[0];
+        const commandBlock = buildCommandBlock(name);
+        const layout = pick(banks.promptLayouts)[0];
+
+        const parts = [
+          opening,
+          role,
+          ...styleLines,
+          ...behaviorLines,
+          ...constraintLines,
+          ...structureLines,
+          ...closerLines,
+          commandHeading,
+          commandNote,
+          commandBlock.key,
+          mode,
+          extra,
+          layout.id
+        ];
+
+        const key = createKey(parts);
+        if (usedKeys.has(key)) continue;
+        usedKeys.add(key);
+
+        const ageValue = pick(banks.ageValues)[0];
+        const habitValue = pick(banks.habitValues)[0];
+        const statusValue = pick(banks.statusValues)[0];
+        const roleValue = pick(banks.roleValues)[0];
+        const memoryValue = pick(banks.memoryValues)[0];
+        const systemValue = pick(banks.systemValues)[0];
+        const personaTitle = pick(banks.modeTitles)[0];
+        const rulesTitle = pick(banks.ruleTitles)[0];
+        const modeTitle = pick(banks.modeBlockTitles)[0];
+        const languageTitle = pick(banks.languageTitles)[0];
+        const activationNote = pick(banks.activationLines)[0];
+
+        finalPrompt = renderPrompt(layout.id, {
+          name,
+          owner,
+          extra,
+          mode,
+          opening,
+          role,
+          styleLines,
+          behaviorLines,
+          constraintLines,
+          structureLines,
+          closerLines,
+          commandHeading,
+          commandNote,
+          commandBlock,
+          ageValue,
+          habitValue,
+          statusValue,
+          roleValue,
+          memoryValue,
+          systemValue,
+          personaTitle,
+          rulesTitle,
+          modeTitle,
+          languageTitle,
+          activationNote
+        });
+
+        meta = `Mode: ${mode} • Layout: ${layout.label} • Varian aktif: ${usedKeys.size} • Menu berubah tiap generate`;
+        break;
+      }
+
+      if (!finalPrompt) {
+        usedKeys.clear();
+        return buildPrompt();
+      }
+
+      el('output').value = finalPrompt;
+      el('meta').textContent = meta;
+    }
+
+    async function copyPrompt() {
+      if (!el('output').value.trim()) buildPrompt();
+      const btn = el('copyBtn');
+      const done = setButtonLoading(btn, 'Copying');
+      setStatus('Menyalin prompt...', 'loading');
+      await sleep(180);
+      const text = el('output').value;
+      let success = false;
+
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+          success = true;
+        }
+      } catch {
+        success = false;
+      }
+
+      if (!success) {
+        success = await copyTextFallback(text);
+      }
+
+      done();
+      if (success) {
+        setStatus('Prompt berhasil disalin', 'done');
+        const old = btn.textContent;
+        btn.textContent = 'Copied';
+        setTimeout(() => {
+          btn.textContent = old;
+          setStatus('Siap dipakai', 'idle');
+        }, 1200);
+      } else {
+        setStatus('Copy gagal, coba manual select', 'idle');
+        alert('Gagal menyalin teks secara otomatis. Silakan copy manual dari textarea.');
+      }
+    }
+
+    async function runGenerate() {
+      const done = setButtonLoading(el('generateBtn'), 'Generating');
+      setStatus('Sedang membuat prompt...', 'loading');
+      showOverlay(true, 'Menyusun prompt...');
+      await sleep(420);
+      buildPrompt();
+      showOverlay(false);
+      done();
+      setStatus('Prompt baru berhasil dibuat', 'done');
+      setTimeout(() => setStatus('Siap dipakai', 'idle'), 1100);
+    }
+
+    async function resetForm() {
+      const done = setButtonLoading(el('resetBtn'), 'Resetting');
+      setStatus('Mengatur ulang form...', 'loading');
+      showOverlay(true, 'Mereset tampilan...');
+      await sleep(320);
+      el('assistantName').value = 'Workspace Helper';
+      el('ownerName').value = 'Nar44';
+      el('mode').value = 'balanced';
+      el('extraNote').value = '';
+      usedKeys.clear();
+      buildPrompt();
+      showOverlay(false);
+      done();
+      setStatus('Form berhasil direset', 'done');
+      setTimeout(() => setStatus('Siap dipakai', 'idle'), 1100);
+    }
+
+    el('generateBtn').addEventListener('click', runGenerate);
+    el('copyBtn').addEventListener('click', copyPrompt);
+    el('resetBtn').addEventListener('click', resetForm);
+
+    initTheme();
+    buildPrompt();
+    setStatus('Siap dipakai', 'idle');
+  </script>
+</body>
+</html>
